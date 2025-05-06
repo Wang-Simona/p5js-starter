@@ -1,4 +1,6 @@
 let font;
+let cubi = [];
+let copie = 30;
 
 function preload() {
   font = loadFont("迷你简雪君.TTF");
@@ -6,33 +8,41 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight, "webgl");
+
+  for (let i = 0; i < copie; i++) {
+    let cubo = {
+      x: random(-500, 500),
+      y: random(-500, 500),
+      z: random(-500, 500),
+      size: 40,
+      color: random(["DarkTurquoise", "DarkSeaGreen", "DarkOrange"]),
+      //rotationAxis: random(["x", "y", "z"]),
+      rotationFunction: random([rotateX, rotateY, rotateZ]),
+    };
+    cubi.push(cubo);
+  }
 }
 
 function draw() {
-  background("white");
+  background("black");
   orbitControl();
 
-  stroke("blue");
-  strokeWeight(4);
-  line(0, 0, width, 0);
+  for (let cubo of cubi) {
+    push();
+    translate(cubo.x, cubo.y, cubo.z);
+    cubo.rotationFunction(frameCount / 10);
+    //   if (cubo.rotationAxis == "x") {
+    //     rotateX(frameCount / 10);
+    //   } else if (cubo.rotationAxis == "y") {
+    //     rotateY(frameCount / 10);
+    //   } else {
+    //     rotateZ(frameCount / 10);
+    //   }
 
-  stroke("#DC143C");
-  strokeWeight(4);
-  line(0, 0, 0, height);
-
-  stroke("red");
-  strokeWeight(4);
-  box(100);
-
-  push();
-  translate(width, 0);
-  box(100);
-  pop();
-
-  push();
-  translate(0, height);
-  box(100);
-  pop();
+    fill(cubo.color);
+    box(cubo.size);
+    pop();
+  }
 }
 
 function windowResized() {
