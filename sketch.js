@@ -77,6 +77,6 @@ function draw() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-function mouseClicked() {
-  saveGif("mySketch", 1);
-}
+//function mouseClicked() {
+saveGif("mySketch", 1);
+//}
